@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/', 'as' => 'frontend'], function () {
-    Route::get('', "HomeController@index");
+Route::group(['prefix' => '/', 'as' => 'frontend', 'namespace' => 'Frontend'], function () {
+    Route::get('', "HomeController@index")->name('.home');
 });
+
+Auth::routes();

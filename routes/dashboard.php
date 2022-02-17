@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard'], function () {
-    Route::get('', "HomeController@index");
+Route::group(['middleware' => 'guest:admin'], function () {
+
+    //login Routes
+    Route::get('login', "LoginController@loginPage")->name('.loginpage');
+    Route::post('login', "LoginController@login")->name('.login');
+});
+
+Route::group(['middleware' => 'auth:admin'], function () {
+    Route::get('', "HomeController@index")->name('.index');
 });
