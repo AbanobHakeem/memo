@@ -19,9 +19,5 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    RewriteCond %{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI}#$0 ^(.*)/(.*)#(\2)$
-    RewriteRule ^(.*)$ index.php
 </IfModule>
-
-
 
