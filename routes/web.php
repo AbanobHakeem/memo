@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/', 'as' => 'frontend', 'namespace' => 'Frontend'], function () {
-    Route::get('', "HomeController@index")->name('.home');
-});
+//localtion prefix and middle ware
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
+    function () {
 
-Auth::routes();
+        Route::group(['prefix' => '/', 'as' => 'frontend', 'namespace' => 'Frontend'], function () {
+            Route::get('', "HomeController@index")->name('.home');
+            Route::get('langs', "HomeController@langs")->name('.langs');
+        });
+
+
+        //laravel auth routes
+        Auth::routes();
+    }
+);

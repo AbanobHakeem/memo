@@ -2,8 +2,16 @@
 
 use Illuminate\Support\Facades\Facade;
 
+$pdo = new PDO('mysql:host=localhost;dbname=memo', 'root', '');
+$statement = $pdo->prepare("select prefix  from languages where `default` = 1 and active =1 LIMIT 1");
+$statement->setFetchMode(\PDO::FETCH_ASSOC);
+$statement->execute();
+$results = $statement->fetchAll();
+
+
 return [
 
+    'itemPerPage' => 9,
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -82,7 +90,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => collect($results)->first()['prefix'],
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +171,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
 
         /*
          * Package Service Providers...
