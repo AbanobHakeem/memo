@@ -1,6 +1,6 @@
 <?php
 $pdo = new PDO('mysql:host=localhost;dbname=memo', 'root', '');
-$statement = $pdo->prepare("select name , script , native , regional , prefix from languages WHERE active = 1");
+$statement = $pdo->prepare("select name , script , native , regional , prefix  from languages WHERE active = 1");
 $statement->setFetchMode(\PDO::FETCH_ASSOC);
 $statement->execute();
 $results = $statement->fetchAll();

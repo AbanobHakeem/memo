@@ -35,6 +35,9 @@ Route::group(
                 //home route
                 Route::get('', "HomeController@index")->name('index');
 
+                //logout
+                Route::post('logout', 'LoginController@logout')->name('logout');
+
                 //language Routes
                 Route::group(['prefix' => 'languages', 'as' => 'languages.'], function () {
                     Route::get('', 'LangController@index')->name('index');
@@ -43,7 +46,18 @@ Route::group(
                     Route::get('{idp}/edit', 'LangController@edit')->name('edit');
                     Route::put('{id}', 'LangController@update')->name('update');
                     Route::delete('{id}', 'LangController@destroy')->name('destroy');
-                    Route::post('{lang}/toggle', 'LangController@toggle');
+                    Route::post('{lang}/toggle', 'LangController@toggle')->name('toggle');
+                });
+
+                //publisher Routes
+                Route::group(['prefix' => 'publishers', 'as' => 'publishers.'], function () {
+                    Route::get('', 'PublisherController@index')->name('index');
+                    Route::get('create', 'PublisherController@create')->name('create');
+                    Route::post('', 'PublisherController@store')->name('store');
+                    Route::get('{idp}/edit', 'PublisherController@edit')->name('edit');
+                    Route::put('{id}', 'PublisherController@update')->name('update');
+                    Route::delete('{id}', 'PublisherController@destroy')->name('destroy');
+                    Route::post('{lang}/toggle', 'PublisherController@toggle')->name('toggle');
                 });
 
                 //Translation Routes
@@ -52,10 +66,6 @@ Route::group(
                     Route::post('', 'TranslationController@store')->name('store');
                     Route::delete('destroy', 'TranslationController@destroy')->name('destroy');
                 });
-
-
-                //logout
-                Route::post('logout', 'LoginController@logout')->name('logout');
             });
         });
     }
