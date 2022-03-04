@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>publishers Tables</h1>
+                        <h1>authours Tables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">publishers</li>
+                            <li class="breadcrumb-item active">authours</li>
                         </ol>
                     </div>
                 </div>
@@ -27,12 +27,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title"> <a href="{{ route('dashboard.publishers.create') }}"
+                                <h3 class="card-title"> <a href="{{ route('dashboard.authours.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
 
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
-                                        action="{{ route('dashboard.publishers.index') }}">
+                                        action="{{ route('dashboard.authours.index') }}">
                                         <div class="input-group input-group-sm" style="width: 150px;">
                                             <input type="text" name="search" class="form-control float-right"
                                                 placeholder="Search" value="{{ request('search') ?? '' }}">
@@ -61,25 +61,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($publishers as $publisher)
+                                        @foreach ($authours as $authour)
                                             <tr>
-                                                <td>{{ $publisher->id }}</td>
-                                                <td> <img src="{{ Storage::url("public/publishers/").$publisher->avatar }}"  class="img-thumbnail" alt="{{ $publisher->name }}" srcset=""></td>
-                                                <td>{{ $publisher->name }}</td>
-                                                <td>{!! Str::limit($publisher->bio,30, $end='...') !!}</td>
+                                                <td>{{ $authour->id }}</td>
+                                                <td> <img src="{{ Storage::url("public/authours/").$authour->avatar }}"  class="img-thumbnail" alt="{{ $authour->name }}" srcset=""></td>
+                                                <td>{{ $authour->name }}</td>
+                                                <td>{!! Str::limit($authour->bio,30, $end='...') !!}</td>
                                                 <td>
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.publishers.toggle',$publisher->id) }}"
-                                                            data-id="{{ $publisher->id }}"
-                                                            @if ($publisher->active) checked @endif
-                                                            id="customSwitch{{ $publisher->id }}">
+                                                        <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.authours.toggle',$authour->id) }}"
+                                                            data-id="{{ $authour->id }}"
+                                                            @if ($authour->active) checked @endif
+                                                            id="customSwitch{{ $authour->id }}">
                                                         <label class="custom-control-label"
-                                                            for="customSwitch{{ $publisher->id }}"></label>
+                                                            for="customSwitch{{ $authour->id }}"></label>
                                                     </div>
                                                 <td>
-                                                    <a href="{{ route('dashboard.publishers.edit', $publisher->id) }}"
+                                                    <a href="{{ route('dashboard.authours.edit', $authour->id) }}"
                                                         class="btn btn-outline-success">Edit</a>
-                                                    <a href="{{ route('dashboard.publishers.destroy', $publisher->id) }}"
+                                                    <a href="{{ route('dashboard.authours.destroy', $authour->id) }}"
                                                         class="btn btn-outline-danger btn-destroy">Delete</a>
                                                 </td>
                                             </tr>
@@ -89,7 +89,7 @@
                                 </table>
                                 <div class=" d-flex justify-content-center">
 
-                                    {{ $publishers->appends($_GET)->links('pagination::bootstrap-4') }}
+                                    {{ $authours->appends($_GET)->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                             <!-- /.card-body -->

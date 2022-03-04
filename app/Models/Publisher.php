@@ -10,6 +10,17 @@ class Publisher extends Model
     protected $fillable = ['name', 'avatar', 'bio', 'active'];
     use HasFactory;
 
+    public function getBioAttribute($value)
+    {
+    return base64_decode($value);
+    }
+
+    public function setBioAttribute($value)
+    { 
+        $this->attributes['bio'] = base64_encode($value);
+    }
+
+
     //Scopes
     public function scopeActive($query)
     {

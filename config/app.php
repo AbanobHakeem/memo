@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Facade;
 
-$pdo = new PDO('mysql:host=localhost;dbname=memo', 'root', '');
-$statement = $pdo->prepare("select prefix  from languages where `default` = 1 and active =1 LIMIT 1");
-$statement->setFetchMode(\PDO::FETCH_ASSOC);
-$statement->execute();
-$results = $statement->fetchAll();
+// $pdo = new PDO('mysql:host=localhost;dbname=memo', 'root', '123');
+// $statement = $pdo->prepare("select prefix  from languages where `default` = 1 and active =1 LIMIT 1");
+// $statement->setFetchMode(\PDO::FETCH_ASSOC);
+// $statement->execute();
+// $results = $statement->fetchAll();
 
 
 return [
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'locale' => collect($results)->first()['prefix'],
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,6 +185,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FacadesServiceProvider::class,
 
     ],
 
@@ -200,7 +201,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Images'=> App\Facades\Images::class,
     ])->toArray(),
 
 ];

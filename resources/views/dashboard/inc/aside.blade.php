@@ -49,33 +49,62 @@
                            </a>
 
                        </li>
-                       <li class="nav-item  @if (request()->routeIs('dashboard.publishers*')) menu-open @endif ">
+                       <li class="nav-item  @if (request()->routeIs('dashboard.authours*')) menu-open @endif ">
                            <a href="#" class="nav-link">
-                               <i class="fas fa-swatchbook"></i>
+                               <i class="fas fa-pen-nib"></i>
                                <p>
-                                   Publishers
+                                Authours
                                    <i class="fas fa-angle-left right"></i>
                                    <span
-                                       class="badge badge-warning right">{{ \App\Models\publisher::Active()->count() }}</span>
+                                       class="badge badge-warning right">{{ \App\Models\Authour::Active()->count() }}</span>
                                </p>
                            </a>
                            <ul class="nav nav-treeview">
                                <li class="nav-item">
-                                   <a href="{{ route('dashboard.publishers.index') }}"
-                                       class="nav-link @if (request()->routeIs('dashboard.publishers.index')) active @endif ">
+                                   <a href="{{ route('dashboard.authours.index') }}"
+                                       class="nav-link @if (request()->routeIs('dashboard.authours.index')) active @endif ">
                                        <i class="fas fa-list"></i>
-                                       <p>View Publishers</p>
+                                       <p>View authours</p>
                                    </a>
                                </li>
                                <li class="nav-item">
-                                   <a href="{{ route('dashboard.publishers.create') }}"
-                                       class="nav-link @if (request()->routeIs('dashboard.publishers.create')) active @endif ">
+                                   <a href="{{ route('dashboard.authours.create') }}"
+                                       class="nav-link @if (request()->routeIs('dashboard.authours.create')) active @endif ">
                                        <i class="fas fa-plus-circle"></i>
-                                       <p>Add Publisher</p>
+                                       <p>Add authour</p>
                                    </a>
                                </li>
                            </ul>
                        </li>
+
+                       <li class="nav-item  @if (request()->routeIs('dashboard.publishers*')) menu-open @endif ">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-swatchbook"></i>
+                            <p>
+                                Publishers
+                                <i class="fas fa-angle-left right"></i>
+                                <span
+                                    class="badge badge-warning right">{{ \App\Models\Publisher::Active()->count() }}</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.publishers.index') }}"
+                                    class="nav-link @if (request()->routeIs('dashboard.publishers.index')) active @endif ">
+                                    <i class="fas fa-list"></i>
+                                    <p>View Publishers</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.publishers.create') }}"
+                                    class="nav-link @if (request()->routeIs('dashboard.publishers.create')) active @endif ">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <p>Add Publisher</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
 
                        <li class="nav-item  @if (request()->routeIs('dashboard.languages*')) menu-open @endif ">
                            <a href="#" class="nav-link">

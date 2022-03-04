@@ -16,6 +16,7 @@
     <!-- Ionicons -->
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('control') }}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{ asset('control') }}/dist/css/custome.css">
     @toastr_css
     @stack('css')
 </head>
@@ -28,13 +29,10 @@
             <img class="animation__shake" src="{{ asset('control') }}/dist/img/AdminLTELogo.png" alt="AdminLTELogo"
                 height="60" width="60">
         </div>
-
         @include('dashboard.inc.nav')
         @include('dashboard.inc.aside')
         @yield('content')
         @include('dashboard.inc.footer')
-
-
 
     </div>
     <!-- ./wrapper -->

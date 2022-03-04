@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule as ValidationRule;
 
-class LanguageRequest extends FormRequest
+class AuthourRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +24,8 @@ class LanguageRequest extends FormRequest
     public function rules()
     {
         return [
-            "prefix" => ['required', ValidationRule::unique('languages')->ignore($this->id)],
-            "name" => 'required',
-            "script" => 'required',
-            "native" => 'required',
-            "regional" => 'required',
-            "dir" => "in:rtl,ltr"
+            'name'=>'required',
+            'bio'=>'required'
         ];
     }
 }

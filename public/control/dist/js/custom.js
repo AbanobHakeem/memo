@@ -9,10 +9,10 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.lang-status').change(function(e) {
+$('.toggle-status').change(function(e) {
     e.preventDefault();
     let status = $(this).is(':checked') ? 1 : 0;
-    let url = `/dashboard/languages/${$(this).data('id')}/toggle`
+    let url = $(this).data('url')
     $.ajax({
         type: "POST",
         url: url,

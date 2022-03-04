@@ -13,12 +13,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Publisher Tables</h1>
+                        <h1>authour Tables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Publisher</li>
+                            <li class="breadcrumb-item active">authour</li>
                         </ol>
                     </div>
                 </div>
@@ -34,19 +34,18 @@
                     <!-- general form elements -->
                     <div class="card card-primary col-12">
                         <div class="card-header">
-                            <h3 class="card-title">Edit publhsers</h3>
+                            <h3 class="card-title">Add new Laguage</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('dashboard.publishers.update',$publisher->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('dashboard.authours.store') }}" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
                             <div class="card-body row">
                                
                                 <div class="form-group col-md-6">
                                     <label for="name">Name</label>
                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror "
-                                        value="{{ old('name',$publisher->name) }}" id="name" placeholder="Enter name">
+                                        value="{{ old('name') }}" id="name" placeholder="Enter name">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -58,14 +57,15 @@
                                     <label for="avatar">Avatar</label>
                                     <div class="input-group">
                                       <div class="custom-file">
-                                        <input type="file" name="avatar" class="custom-file-input " id="avatar">
-                                        <label class="custom-file-label" for="avatar">{{ $publisher->avatar }}</label>
+                                        <input type="file" name="avatar" class="custom-file-input" id="avatar">
+                                        <label class="custom-file-label" for="avatar">Choose file</label>
                                       </div>
                                       <div class="input-group-append">
                                         <span class="input-group-text">Upload</span>
                                       </div>
                                     </div>
-                                   
+                                    
+                                @enderror
                                   </div>
                                 <div class="col-md-12">
                                     <div class="card card-outline card-info">
@@ -76,8 +76,7 @@
                                       </div>
                                       <!-- /.card-header -->
                                       <div class="card-body">
-                                        <textarea class=" @error('bio') is-invalid @enderror  " id="summernote" name="bio">
-                                            {{ old('bio',$publisher->bio) }}
+                                        <textarea  class=" @error('bio') is-invalid @enderror " id="summernote" name="bio" >
                                         </textarea>
                                       </div>
                                       <div class="card-footer">
@@ -90,9 +89,9 @@
                                     </div>
                                   </div>    
                                 <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the Publisher</label>
+                                    <label for="active"> Active the authour</label>
                                     <div class="custom-control custom-switch ">
-                                        <input type="checkbox" name="active" @checked(old('active',$publisher->active ))
+                                        <input type="checkbox" name="active"
                                             class="custom-control-input @error('active') is-invalid @enderror " id="active">
                                         <label class="custom-control-label" for="active"></label>
                                     </div>

@@ -59,6 +59,17 @@ Route::group(
                     Route::delete('{id}', 'PublisherController@destroy')->name('destroy');
                     Route::post('{lang}/toggle', 'PublisherController@toggle')->name('toggle');
                 });
+                
+                //authour Routes
+                Route::group(['prefix' => 'authours', 'as' => 'authours.'], function () {
+                    Route::get('', 'AuthourController@index')->name('index');
+                    Route::get('create', 'AuthourController@create')->name('create');
+                    Route::post('', 'AuthourController@store')->name('store');
+                    Route::get('{idp}/edit', 'AuthourController@edit')->name('edit');
+                    Route::put('{id}', 'AuthourController@update')->name('update');
+                    Route::delete('{id}', 'AuthourController@destroy')->name('destroy');
+                    Route::post('{lang}/toggle', 'AuthourController@toggle')->name('toggle');
+                });
 
                 //Translation Routes
                 Route::group(['prefix' => 'translation', 'as' => 'translation.'], function () {

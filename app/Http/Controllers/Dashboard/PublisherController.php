@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Facades\Images;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PublisherRequest;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PublisherController extends Controller
 {
@@ -33,20 +36,22 @@ class PublisherController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
-    public function store(Request $request)
+    public function store(PublisherRequest $request)
     {
         $data = $request->except('_token');
         $data['active'] = $request->has('active');
-        try {
+        if($request->hasFile('avatar'))
+            $data['avatar']=Images::save('publishers',$data['avatar']);
+        try { 
             Publisher::create($data);
             toastr()->success('New Publisher added');
             return redirect()->back();
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
             return redirect()->back();
-        }
+        } 
     }
 
     /**
@@ -79,18 +84,20 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PublisherRequest $request, $id)
     {
         $data = $request->except('_token', '_method');
         $data['active'] = $request->has('active');
-        try {
+        if($request->hasFile('avatar'))
+            $data['avatar']=Images::save('publishers',$data['avatar']);
+        try { 
             Publisher::find($id)->update($data);
-            toastr()->success('Publisher updated');
-            return redirect()->back();
+            toastr()->success('New Publisher added');
+            return redirect()->route('dashboard.publishers.index',['search'=>$data['name']]);
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
             return redirect()->back();
-        }
+        } 
     }
 
     /**
