@@ -82,7 +82,7 @@
                                       </div>
                                       <div class="card-footer">
                                         @error('bio')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="d-block invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
