@@ -46,7 +46,7 @@ Route::group(
                     Route::get('{idp}/edit', 'AdminController@edit')->name('edit');
                     Route::put('{id}', 'AdminController@update')->name('update');
                     Route::delete('{id}', 'AdminController@destroy')->name('destroy');
-                    Route::post('{id}/toggle', 'LangController@toggle')->name('toggle');
+                    Route::post('{id}/toggle', 'AdminController@toggle')->name('toggle');
 
                 });
 
@@ -58,7 +58,7 @@ Route::group(
                     Route::get('{idp}/edit', 'UserController@edit')->name('edit');
                     Route::put('{id}', 'UserController@update')->name('update');
                     Route::delete('{id}', 'UserController@destroy')->name('destroy');
-                    Route::post('{id}/toggle', 'LangController@toggle')->name('toggle');
+                    Route::post('{id}/toggle', 'AdminController@toggle')->name('toggle');
 
                 });
 

@@ -110,6 +110,7 @@ class UserController extends Controller
      */
     public function toggle(Request $request, $id)
     {
+        return $request->input('status');
         try {
             return  User::find($id)->update(['active' => $request->input('status')]);
         } catch (\Exception $ex) {
