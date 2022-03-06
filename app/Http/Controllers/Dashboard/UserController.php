@@ -4,22 +4,22 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Facades\Images;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PublisherRequest;
-use App\Models\Publisher;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
-class PublisherController extends Controller
+class UserController extends Controller
 {
     /**
-     * Display a listing of  the resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $data['publishers'] = Publisher::search()->ordered()->paginate(config('app.itemPerPage'));
-        return view('dashboard.pages.publishers.list', $data);
+        $data['users'] = User::search()->paginate(config('app.itemPerPage'));
+        return view('dashboard.pages.users.list', $data);
     }
 
     /**
@@ -29,24 +29,25 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        return view('dashboard.pages.publishers.create');
+        return view('dashboard.pages.users.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
-    public function store(PublisherRequest $request)
+    public function store(UserRequest $request)
     {
         $data = $request->except('_token');
         $data['active'] = $request->has('active');
+        $data['password']=Hash::make($data['password']);
         if($request->hasFile('avatar'))
-            $data['avatar']=Images::save('publishers',$data['avatar']);
+            $data['avatar']=Images::save('users',$data['avatar']);
         try { 
-            Publisher::create($data);
-            toastr()->success('New Publisher added');
+            User::create($data);
+            toastr()->success('New User added');
             return redirect()->back();
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
@@ -73,8 +74,8 @@ class PublisherController extends Controller
      */
     public function edit($id)
     {
-        $data['publisher'] = Publisher::find($id);
-        return view('dashboard.pages.publishers.edit', $data);
+        $data['user'] = User::find($id);
+        return view('dashboard.pages.users.edit', $data);
     }
 
     /**
@@ -84,16 +85,17 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PublisherRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $data = $request->except('_token', '_method');
         $data['active'] = $request->has('active');
+        $data['password']=Hash::make($data['password']);
         if($request->hasFile('avatar'))
-            $data['avatar']=Images::save('publishers',$data['avatar']);
+            $data['avatar']=Images::save('users',$data['avatar']);
         try { 
-            Publisher::find($id)->update($data);
-            toastr()->success('New Publisher added');
-            return redirect()->route('dashboard.publishers.index',['search'=>$data['name']]);
+            User::find($id)->update($data);
+            toastr()->success('New user added');
+            return redirect()->route('dashboard.users.index',['search'=>$data['name']]);
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
             return redirect()->back();
@@ -106,22 +108,10 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        try {
-            Publisher::destroy($id);
-            toastr()->success('the Publisher was deleted');
-            return redirect()->back();
-        } catch (\Exception $ex) {
-            toastr()->error($ex->getMessage());
-            return redirect()->back();
-        }
-    }
     public function toggle(Request $request, $id)
     {
         try {
-
-            return  Publisher::find($id)->update(['active' => $request->input('status')]);
+            return  User::find($id)->update(['active' => $request->input('status')]);
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }

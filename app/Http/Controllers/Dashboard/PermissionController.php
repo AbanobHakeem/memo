@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Facades\Images;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PublisherRequest;
-use App\Models\Publisher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route as FacadesRoute;
+use Spatie\Permission\Models\Permission;
 
-class PublisherController extends Controller
+
+class PermissionController extends Controller
 {
     /**
-     * Display a listing of  the resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $data['publishers'] = Publisher::search()->ordered()->paginate(config('app.itemPerPage'));
-        return view('dashboard.pages.publishers.list', $data);
+       
+       $data['permissions']=Permission::get();
+       return view("dashboard.pages.permissions.list",$data);
     }
 
     /**
@@ -29,24 +29,23 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        return view('dashboard.pages.publishers.create');
+        
+        return view('dashboard.pages.permissions.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
-    public function store(PublisherRequest $request)
+    public function store(Request $request)
     {
         $data = $request->except('_token');
-        $data['active'] = $request->has('active');
-        if($request->hasFile('avatar'))
-            $data['avatar']=Images::save('publishers',$data['avatar']);
+
         try { 
-            Publisher::create($data);
-            toastr()->success('New Publisher added');
+            Permission::create($data);
+            toastr()->success('New Permission added');
             return redirect()->back();
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
@@ -73,8 +72,8 @@ class PublisherController extends Controller
      */
     public function edit($id)
     {
-        $data['publisher'] = Publisher::find($id);
-        return view('dashboard.pages.publishers.edit', $data);
+        $data['permission'] = Permission::find($id);
+        return view('dashboard.pages.permissions.edit', $data);
     }
 
     /**
@@ -84,16 +83,13 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PublisherRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->except('_token', '_method');
-        $data['active'] = $request->has('active');
-        if($request->hasFile('avatar'))
-            $data['avatar']=Images::save('publishers',$data['avatar']);
+        $data = $request->except('_token');
         try { 
-            Publisher::find($id)->update($data);
-            toastr()->success('New Publisher added');
-            return redirect()->route('dashboard.publishers.index',['search'=>$data['name']]);
+            Permission::find($id)->update($data);
+            toastr()->success('Permission Updated');
+            return redirect()->back();
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
             return redirect()->back();
@@ -109,21 +105,12 @@ class PublisherController extends Controller
     public function destroy($id)
     {
         try {
-            Publisher::destroy($id);
-            toastr()->success('the Publisher was deleted');
+            Permission::destroy($id);
+            toastr()->success('the Permission was deleted');
             return redirect()->back();
         } catch (\Exception $ex) {
             toastr()->error($ex->getMessage());
             return redirect()->back();
-        }
-    }
-    public function toggle(Request $request, $id)
-    {
-        try {
-
-            return  Publisher::find($id)->update(['active' => $request->input('status')]);
-        } catch (\Exception $ex) {
-            return $ex->getMessage();
         }
     }
 }

@@ -1,3 +1,9 @@
 table td img {
     width: 80px;
 }
+.nav .nav-item .nav-item{
+   margin-left:15px
+}
+/* Input field */
+.select2-selection__choice { 
+    background-color:#007bff !important}

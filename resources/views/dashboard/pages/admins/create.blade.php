@@ -2,7 +2,9 @@
 @push('css')
     <!-- textarea -->
     <link rel="stylesheet" href="{{ asset('control') }}/plugins/summernote/summernote-bs4.min.css">
-
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('control') }}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('control') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endpush
 
 @section('content')
@@ -13,12 +15,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>authour Tables</h1>
+                        <h1>admin Tables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">authour</li>
+                            <li class="breadcrumb-item active">admin</li>
                         </ol>
                     </div>
                 </div>
@@ -34,11 +36,11 @@
                     <!-- general form elements -->
                     <div class="card card-primary col-12">
                         <div class="card-header">
-                            <h3 class="card-title">Add new Laguage</h3>
+                            <h3 class="card-title">Add new Admin</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('dashboard.authours.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('dashboard.admins.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body row">
                                
@@ -64,32 +66,44 @@
                                         <span class="input-group-text">Upload</span>
                                       </div>
                                     </div>
-                                    
-                                
-                                  </div>
-                                <div class="col-md-12">
-                                    <div class="card card-outline card-info">
-                                      <div class="card-header">
-                                        <h3 class="card-title">
-                                          Bio
-                                        </h3>
-                                      </div>
-                                      <!-- /.card-header -->
-                                      <div class="card-body">
-                                        <textarea  class=" @error('bio') is-invalid @enderror " id="summernote" name="bio" >
-                                        </textarea>
-                                      </div>
-                                      <div class="card-footer">
-                                        @error('bio')
-                                        <span class="d-block invalid-feedback" role="alert">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="email">email</label>
+                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror "
+                                        value="{{ old('email') }}" id="email" placeholder="Enter email">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                      </div>
-                                    </div>
-                                  </div>    
-                                <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the authour</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="password">password</label>
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror "
+                                        value="{{ old('password') }}" id="password" placeholder="Enter password">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 text-primray">
+                                    <label>Roels</label>
+                                    <select name="roles[]" class="form-control select2 @error('roles') is-invalid @enderror " multiple
+                                        style="width: 100%">
+                                        @foreach ($roles as  $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>                                        
+                                        @endforeach
+                                    </select>
+                                    @error('roles')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label for="active"> Active the admin</label>
                                     <div class="custom-control custom-switch ">
                                         <input type="checkbox" name="active"
                                             class="custom-control-input @error('active') is-invalid @enderror " id="active">
@@ -113,7 +127,7 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        <!-- /.content -->
+        <!-- /.content --> 
     </div>
 @endsection
 @push('js')
@@ -125,4 +139,17 @@
               $('#summernote').summernote()
         })
     </script>
+     <!-- Select2 -->
+     <script src="{{ asset('control') }}/plugins/select2/js/select2.full.min.js"></script>
+     <script>
+         $(function() {
+             //Initialize Select2 Elements
+             $('.select2').select2()
+ 
+             //Initialize Select2 Elements
+             $('.select2bs4').select2({
+                 theme: 'bootstrap4'
+             })
+         })
+     </script>
 @endpush

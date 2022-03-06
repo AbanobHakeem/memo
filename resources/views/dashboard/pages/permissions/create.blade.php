@@ -1,10 +1,9 @@
 @extends('layouts.dashboard')
 @push('css')
-    <!-- textarea -->
-    <link rel="stylesheet" href="{{ asset('control') }}/plugins/summernote/summernote-bs4.min.css">
-
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('control') }}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('control') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endpush
-
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -38,7 +37,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('dashboard.authours.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('dashboard.permissions.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body row">
                                
@@ -54,53 +53,20 @@
                                 </div>
                                 
                                 <div class="form-group col-md-6">
-                                    <label for="avatar">Avatar</label>
-                                    <div class="input-group">
-                                      <div class="custom-file">
-                                        <input type="file" name="avatar" class="custom-file-input" id="avatar">
-                                        <label class="custom-file-label" for="avatar">Choose file</label>
-                                      </div>
-                                      <div class="input-group-append">
-                                        <span class="input-group-text">Upload</span>
-                                      </div>
-                                    </div>
-                                    
-                                
-                                  </div>
-                                <div class="col-md-12">
-                                    <div class="card card-outline card-info">
-                                      <div class="card-header">
-                                        <h3 class="card-title">
-                                          Bio
-                                        </h3>
-                                      </div>
-                                      <!-- /.card-header -->
-                                      <div class="card-body">
-                                        <textarea  class=" @error('bio') is-invalid @enderror " id="summernote" name="bio" >
-                                        </textarea>
-                                      </div>
-                                      <div class="card-footer">
-                                        @error('bio')
-                                        <span class="d-block invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                      </div>
-                                    </div>
-                                  </div>    
-                                <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the authour</label>
-                                    <div class="custom-control custom-switch ">
-                                        <input type="checkbox" name="active"
-                                            class="custom-control-input @error('active') is-invalid @enderror " id="active">
-                                        <label class="custom-control-label" for="active"></label>
-                                    </div>
-                                    @error('active')
+                                    <label>Guard</label>
+                                    <select name="guard_name" class="form-control select2 @error('guard_name') is-invalid @enderror "
+                                        style="width: 100%">
+                                        @foreach (config('auth.guards') as  $key => $guard)
+                                        <option value="{{ $key }}">{{ $key }}</option>                                        
+                                        @endforeach
+                                    </select>
+                                    @error('guard_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
+
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">
@@ -117,12 +83,18 @@
     </div>
 @endsection
 @push('js')
-        <!-- Summernote -->
-<script src="{{ asset('control') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('control') }}/plugins/select2/js/select2.full.min.js"></script>
     <script>
         $(function() {
-            // Summernote
-              $('#summernote').summernote()
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
         })
     </script>
 @endpush
+

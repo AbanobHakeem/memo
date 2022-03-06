@@ -13,12 +13,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>authour Tables</h1>
+                        <h1>user Tables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">authour</li>
+                            <li class="breadcrumb-item active">user</li>
                         </ol>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('dashboard.authours.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('dashboard.users.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body row">
                                
@@ -64,32 +64,32 @@
                                         <span class="input-group-text">Upload</span>
                                       </div>
                                     </div>
-                                    
-                                
-                                  </div>
-                                <div class="col-md-12">
-                                    <div class="card card-outline card-info">
-                                      <div class="card-header">
-                                        <h3 class="card-title">
-                                          Bio
-                                        </h3>
-                                      </div>
-                                      <!-- /.card-header -->
-                                      <div class="card-body">
-                                        <textarea  class=" @error('bio') is-invalid @enderror " id="summernote" name="bio" >
-                                        </textarea>
-                                      </div>
-                                      <div class="card-footer">
-                                        @error('bio')
-                                        <span class="d-block invalid-feedback" role="alert">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="email">email</label>
+                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror "
+                                        value="{{ old('email') }}" id="email" placeholder="Enter email">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                      </div>
-                                    </div>
-                                  </div>    
-                                <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the authour</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="password">password</label>
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror "
+                                        value="{{ old('password') }}" id="password" placeholder="Enter password">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                               
+
+                                <div class="form-group col-md-12 ">
+                                    <label for="active"> Active the user</label>
                                     <div class="custom-control custom-switch ">
                                         <input type="checkbox" name="active"
                                             class="custom-control-input @error('active') is-invalid @enderror " id="active">

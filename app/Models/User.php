@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
     ];
 
@@ -41,4 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+    public function scopeSearch($query)
+    {
+        if (request()->has('search'))
+            return $query->where('name', 'LIKE', '%' . request('search') . '%');
+    }
 }

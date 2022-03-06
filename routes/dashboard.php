@@ -30,7 +30,7 @@ Route::group(
                 Route::post('login', "LoginController@login")->name('login');
             });
 
-            Route::group(['middleware' => 'auth:admin'], function () {
+            Route::group(['middleware' => ['auth:admin','active','checkpermission']], function () {
 
                 //home route
                 Route::get('', "HomeController@index")->name('index');
@@ -38,16 +38,49 @@ Route::group(
                 //logout
                 Route::post('logout', 'LoginController@logout')->name('logout');
 
-                //language Routes
-                Route::group(['prefix' => 'languages', 'as' => 'languages.'], function () {
-                    Route::get('', 'LangController@index')->name('index');
-                    Route::get('create', 'LangController@create')->name('create');
-                    Route::post('', 'LangController@store')->name('store');
-                    Route::get('{idp}/edit', 'LangController@edit')->name('edit');
-                    Route::put('{id}', 'LangController@update')->name('update');
-                    Route::delete('{id}', 'LangController@destroy')->name('destroy');
-                    Route::post('{lang}/toggle', 'LangController@toggle')->name('toggle');
+                //Admin Routes
+                Route::group(['prefix' => 'admins', 'as' => 'admins.'], function () {
+                    Route::get('', 'AdminController@index')->name('index');
+                    Route::get('create', 'AdminController@create')->name('create');
+                    Route::post('', 'AdminController@store')->name('store');
+                    Route::get('{idp}/edit', 'AdminController@edit')->name('edit');
+                    Route::put('{id}', 'AdminController@update')->name('update');
+                    Route::delete('{id}', 'AdminController@destroy')->name('destroy');
+                    Route::post('{id}/toggle', 'LangController@toggle')->name('toggle');
+
                 });
+
+                //User Routes
+                Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+                    Route::get('', 'UserController@index')->name('index');
+                    Route::get('create', 'UserController@create')->name('create');
+                    Route::post('', 'UserController@store')->name('store');
+                    Route::get('{idp}/edit', 'UserController@edit')->name('edit');
+                    Route::put('{id}', 'UserController@update')->name('update');
+                    Route::delete('{id}', 'UserController@destroy')->name('destroy');
+                    Route::post('{id}/toggle', 'LangController@toggle')->name('toggle');
+
+                });
+
+                //Roles Routes
+                Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
+                    Route::get('', 'RoleController@index')->name('index');
+                    Route::get('create', 'RoleController@create')->name('create');
+                    Route::post('', 'RoleController@store')->name('store');
+                    Route::get('{idp}/edit', 'RoleController@edit')->name('edit');
+                    Route::put('{id}', 'RoleController@update')->name('update');
+                    Route::delete('{id}', 'RoleController@destroy')->name('destroy');
+                });
+
+                //Permission Routes
+                Route::group(['prefix' => 'permissions', 'as' => 'permissions.'], function () {
+                Route::get('', 'PermissionController@index')->name('index');
+                Route::get('create', 'PermissionController@create')->name('create');
+                Route::post('', 'PermissionController@store')->name('store');
+                Route::get('{idp}/edit', 'PermissionController@edit')->name('edit');
+                Route::put('{id}', 'PermissionController@update')->name('update');
+                Route::delete('{id}', 'PermissionController@destroy')->name('destroy');
+            });
 
                 //publisher Routes
                 Route::group(['prefix' => 'publishers', 'as' => 'publishers.'], function () {
@@ -57,7 +90,7 @@ Route::group(
                     Route::get('{idp}/edit', 'PublisherController@edit')->name('edit');
                     Route::put('{id}', 'PublisherController@update')->name('update');
                     Route::delete('{id}', 'PublisherController@destroy')->name('destroy');
-                    Route::post('{lang}/toggle', 'PublisherController@toggle')->name('toggle');
+                    Route::post('{id}/toggle', 'PublisherController@toggle')->name('toggle');
                 });
                 
                 //authour Routes
@@ -68,7 +101,18 @@ Route::group(
                     Route::get('{idp}/edit', 'AuthourController@edit')->name('edit');
                     Route::put('{id}', 'AuthourController@update')->name('update');
                     Route::delete('{id}', 'AuthourController@destroy')->name('destroy');
-                    Route::post('{lang}/toggle', 'AuthourController@toggle')->name('toggle');
+                    Route::post('{id}/toggle', 'AuthourController@toggle')->name('toggle');
+                });
+
+                //language Routes
+                Route::group(['prefix' => 'languages', 'as' => 'languages.'], function () {
+                    Route::get('', 'LangController@index')->name('index');
+                    Route::get('create', 'LangController@create')->name('create');
+                    Route::post('', 'LangController@store')->name('store');
+                    Route::get('{idp}/edit', 'LangController@edit')->name('edit');
+                    Route::put('{id}', 'LangController@update')->name('update');
+                    Route::delete('{id}', 'LangController@destroy')->name('destroy');
+                    Route::post('{id}/toggle', 'LangController@toggle')->name('toggle');
                 });
 
                 //Translation Routes
