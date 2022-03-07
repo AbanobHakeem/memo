@@ -108,6 +108,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @can('dashboard.languages.toggle')
                                 <div class="form-group col-md-6 ">
                                     <label for="active"> Active the language</label>
                                     <div class="custom-control custom-switch ">
@@ -121,6 +122,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @endcan
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">
@@ -135,7 +137,7 @@
         </section>
         <!-- /.content -->
     </div>
-@endsection
+@endsection 
 @push('js')
     <!-- Select2 -->
     <script src="{{ asset('control') }}/plugins/select2/js/select2.full.min.js"></script>

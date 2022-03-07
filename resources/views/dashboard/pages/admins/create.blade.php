@@ -102,6 +102,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @can('dashboard.admins.toggle')    
                                 <div class="form-group col-md-12 ">
                                     <label for="active"> Active the admin</label>
                                     <div class="custom-control custom-switch ">
@@ -115,6 +116,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @endcan
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

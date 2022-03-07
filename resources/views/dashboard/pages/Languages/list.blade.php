@@ -27,9 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.languages.create')
                                 <h3 class="card-title"> <a href="{{ route('dashboard.languages.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
-
+                                @endcan
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
                                         action="{{ route('dashboard.languages.index') }}">
@@ -56,8 +57,14 @@
                                             <th>prefix</th>
                                             <th>name</th>
                                             <th>native</th>
+                                            @can('dashboard.languages.toggle')
                                             <th>Active</th>
+                                            @endcan
+                                            @canany(['dashboard.languages.edit', 'dashboard.languages.destroy'])
                                             <th>Action</th>
+                                            @endcanany
+                                            
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,21 +74,30 @@
                                                 <td>{{ $lang->prefix }}</td>
                                                 <td>{{ $lang->name }}</td>
                                                 <td>{{ $lang->native }}</td>
+                                                @can('dashboard.languages.toggle')
                                                 <td>
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input lang-status"
+                                                        <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.languages.toggle',$lang->id) }}"
                                                             data-id="{{ $lang->id }}"
                                                             @if ($lang->active) checked @endif
                                                             id="customSwitch{{ $lang->id }}">
                                                         <label class="custom-control-label"
                                                             for="customSwitch{{ $lang->id }}"></label>
                                                     </div>
+                                                </td>                                                @endcan
+                                                @canany(['dashboard.languages.edit', 'dashboard.languages.destroy'])
                                                 <td>
+                                                    @can('dashboard.languages.edit')
                                                     <a href="{{ route('dashboard.languages.edit', $lang->id) }}"
                                                         class="btn btn-outline-success">Edit</a>
+                                                    @endcan
+                                                    @can('dashboard.languages.destroy')
                                                     <a href="{{ route('dashboard.languages.destroy', $lang->id) }}"
                                                         class="btn btn-outline-danger btn-destroy">Delete</a>
-                                                </td>
+                                                        
+                                                    @endcan
+                                                </td>    
+                                                @endcanany
                                             </tr>
                                         @endforeach
 

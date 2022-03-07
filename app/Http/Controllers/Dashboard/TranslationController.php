@@ -13,10 +13,10 @@ class TranslationController extends Controller
     public function index()
     {
         $data['prefixes'] = Language::active()->Ordered()->get()->pluck('prefix');
-        $data['keys'] = file_exists(base_path('lang\\temp.json')) ? array_keys(json_decode(file_get_contents(base_path('lang\\temp.json')), true)) : [];
+        $data['keys'] = file_exists(base_path('lang/temp.json')) ? array_keys(json_decode(file_get_contents(base_path('lang/temp.json')), true)) : [];
 
         foreach ($data['prefixes'] as $prefix) {
-            $data['langs'][$prefix] = file_exists(base_path('lang\\' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang\\' . $prefix . '.json')), true) : [];
+            $data['langs'][$prefix] = file_exists(base_path('lang/' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang/' . $prefix . '.json')), true) : [];
         }
         return view('dashboard.pages.translations.list', $data);
     }
@@ -24,13 +24,13 @@ class TranslationController extends Controller
     {
         try {
 
-            $data = file_exists(base_path('lang\\temp.json')) ? json_decode(file_get_contents(base_path('lang\\temp.json')), true) : [];
+            $data = file_exists(base_path('lang/temp.json')) ? json_decode(file_get_contents(base_path('lang/temp.json')), true) : [];
             $data[$request->key] = '';
-            file_put_contents(base_path('lang\\temp.json'), json_encode($data));
+            file_put_contents(base_path('lang/temp.json'), json_encode($data));
             foreach ($request->langs as $prefix => $value) {
-                $data = file_exists(base_path('lang\\' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang\\' . $prefix . '.json')), true) : [];
+                $data = file_exists(base_path('lang/' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang/' . $prefix . '.json')), true) : [];
                 $data[$request->key] = $value;
-                file_put_contents(base_path('lang\\' . $prefix . '.json'), json_encode($data));
+                file_put_contents(base_path('lang/' . $prefix . '.json'), json_encode($data));
             }
 
             toastr()->success("Translarion Stored sucseefuly");
@@ -46,15 +46,15 @@ class TranslationController extends Controller
         $key = $request->key ?? '';
         try {
 
-            $data = file_exists(base_path('lang\\temp.json')) ? json_decode(file_get_contents(base_path('lang\\temp.json')), true) : [];
+            $data = file_exists(base_path('lang/temp.json')) ? json_decode(file_get_contents(base_path('lang/temp.json')), true) : [];
             unset($data[$key]);
-            file_put_contents(base_path('lang\\temp.json'), json_encode($data));
+            file_put_contents(base_path('lang/temp.json'), json_encode($data));
 
             $data['prefixes'] = Language::active()->Ordered()->get()->pluck('prefix');
             foreach ($data['prefixes'] as $prefix) {
-                $data = file_exists(base_path('lang\\' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang\\' . $prefix . '.json')), true) : [];
+                $data = file_exists(base_path('lang/' . $prefix . '.json')) ? json_decode(file_get_contents(base_path('lang/' . $prefix . '.json')), true) : [];
                 unset($data[$key]);
-                file_put_contents(base_path('lang\\' . $prefix . '.json'), json_encode($data));
+                file_put_contents(base_path('lang/' . $prefix . '.json'), json_encode($data));
             }
 
             toastr()->success("Translarion deleted sucseefuly");

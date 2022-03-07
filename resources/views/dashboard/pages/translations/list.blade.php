@@ -33,10 +33,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.translation.store')
                                 <h3 class="card-title"> <a data-toggle="modal" data-target="#addTrans"
                                         class="btn btn-primary">Add new</a></h3>
-
-
+                                @endcan
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -48,7 +48,9 @@
                                         @foreach ($prefixes as $prefix)
                                             <th>{{ ucfirst($prefix) }}</th>
                                         @endforeach
+                                        @canany(['dashboard.translation.store','dashboard.translation.destroy'])
                                         <th>Action</th>
+                                        @endcanany
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,13 +60,19 @@
                                             @foreach ($langs as $prefix => $lang)
                                                 <td data-name="{{ $prefix }}">{{ $lang[$key] ?? '' }}</td>
                                             @endforeach
+                                            @canany(['dashboard.translation.store','dashboard.translation.destroy'])
                                             <td>
+                                                @can('dashboard.translation.store')
                                                 <a href="" class="btn btn-outline-success btn-editTrans" data-toggle="modal"
                                                     data-target="#editTrans">Edit</a>
+                                                @endcan
+                                                @can('dashboard.translation.destroy')
                                                 <a href="" class="btn btn-outline-danger btn-destroy-trans"
                                                     data-key="{{ $key }}">Delete</a>
+                                                @endcan
                                             </td>
-                                            </td>
+                                            @endcanany
+                                            
                                         </tr>
                                     @endforeach
                                 </tbody>

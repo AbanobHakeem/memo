@@ -27,8 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.users.create')
                                 <h3 class="card-title"> <a href="{{ route('dashboard.users.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
+                                @endcan
 
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
@@ -56,8 +58,12 @@
                                             <th>Avatar</th>
                                             <th>name</th>
                                             <th>Email</th>
+                                            @canany(['dashboard.users.toggle'])
                                             <th>Active</th>
+                                            @endcan
+                                            @canany(['dashboard.users.edit','dashboard.users.destroy'])
                                             <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,6 +73,7 @@
                                                 <td> <img src="{{ Storage::url("public/users/").$user->avatar }}"  class="img-thumbnail" alt="{{ $user->name }}" srcset=""></td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
+                                                @can('dashboard.users.toggle')
                                                 <td>
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.users.toggle',$user->id) }}"
@@ -76,12 +83,21 @@
                                                         <label class="custom-control-label"
                                                             for="customSwitch{{ $user->id }}"></label>
                                                     </div>
-                                                <td>
-                                                    <a href="{{ route('dashboard.users.edit', $user->id) }}"
-                                                        class="btn btn-outline-success">Edit</a>
-                                                    <a href="{{ route('dashboard.users.destroy', $user->id) }}"
-                                                        class="btn btn-outline-danger btn-destroy">Delete</a>
                                                 </td>
+                                                @endcan
+                                                    @canany(['dashboard.users.edit','dashboard.users.destroy'])
+                                                    <td>
+                                                        @can('dashboard.users.edit')
+                                                        <a href="{{ route('dashboard.users.edit', $user->id) }}"
+                                                            class="btn btn-outline-success">Edit</a> 
+                                                        @endcan
+                                                     @can('dashboard.users.destroy')
+                                                     <a href="{{ route('dashboard.users.destroy', $user->id) }}"
+                                                        class="btn btn-outline-danger btn-destroy">Delete</a> 
+                                                     @endcan
+                                                    </td>
+                                                    @endcan
+                                               
                                             </tr>
                                         @endforeach
 

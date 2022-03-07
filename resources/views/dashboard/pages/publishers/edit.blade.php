@@ -14,7 +14,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>Publisher Tables</h1>
-                    </div>
+                    </div> 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
@@ -89,19 +89,22 @@
                                       </div>
                                     </div>
                                   </div>    
-                                <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the Publisher</label>
-                                    <div class="custom-control custom-switch ">
-                                        <input type="checkbox" name="active" @checked(old('active',$publisher->active ))
-                                            class="custom-control-input @error('active') is-invalid @enderror " id="active">
-                                        <label class="custom-control-label" for="active"></label>
-                                    </div>
-                                    @error('active')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                  @can('dashboard.publishers.toggle')
+                                  <div class="form-group col-md-6 ">
+                                      <label for="active"> Active the Publisher</label>
+                                      <div class="custom-control custom-switch ">
+                                          <input type="checkbox" name="active" @checked(old('active',$publisher->active ))
+                                              class="custom-control-input @error('active') is-invalid @enderror " id="active">
+                                          <label class="custom-control-label" for="active"></label>
+                                      </div>
+                                      @error('active')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                      @enderror
+                                  </div>
+                                  @endcan
+                                      
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

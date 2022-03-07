@@ -103,19 +103,21 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-12 ">
-                                    <label for="active"> Active the admin</label>
-                                    <div class="custom-control custom-switch ">
-                                        <input type="checkbox" name="active" @checked(old('active',$admin->active ))
-                                            class="custom-control-input @error('active') is-invalid @enderror " id="active">
-                                        <label class="custom-control-label" for="active"></label>
+                                @can('dashboard.admin.toggle')
+                                    <div class="form-group col-md-12 ">
+                                        <label for="active"> Active the admin</label>
+                                        <div class="custom-control custom-switch ">
+                                            <input type="checkbox" name="active" @checked(old('active',$admin->active ))
+                                                class="custom-control-input @error('active') is-invalid @enderror " id="active">
+                                            <label class="custom-control-label" for="active"></label>
+                                        </div>
+                                        @error('active')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    @error('active')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                @endcan
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

@@ -9,7 +9,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <section class="content-header"> 
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -109,6 +109,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @can('dashboard.languages.toggle')
                                 <div class="form-group col-md-6 ">
                                     <label for="active"> Active the language</label>
                                     <div class="custom-control custom-switch ">
@@ -123,6 +124,8 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @endcan
+                                
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

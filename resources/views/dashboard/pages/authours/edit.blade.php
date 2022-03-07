@@ -5,7 +5,7 @@
 
 @endpush
 
-@section('content')
+@section('content') 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -89,19 +89,21 @@
                                       </div>
                                     </div>
                                   </div>    
-                                <div class="form-group col-md-6 ">
-                                    <label for="active"> Active the authour</label>
-                                    <div class="custom-control custom-switch ">
-                                        <input type="checkbox" name="active" @checked(old('active',$authour->active ))
-                                            class="custom-control-input @error('active') is-invalid @enderror " id="active">
-                                        <label class="custom-control-label" for="active"></label>
-                                    </div>
-                                    @error('active')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                  @can('dashboard.authours.toggle')
+                                  <div class="form-group col-md-6 ">
+                                      <label for="active"> Active the authour</label>
+                                      <div class="custom-control custom-switch ">
+                                          <input type="checkbox" name="active" @checked(old('active',$authour->active ))
+                                              class="custom-control-input @error('active') is-invalid @enderror " id="active">
+                                          <label class="custom-control-label" for="active"></label>
+                                      </div>
+                                      @error('active')
+                                          <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </span>
+                                      @enderror
+                                  </div>
+                                  @endcan
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

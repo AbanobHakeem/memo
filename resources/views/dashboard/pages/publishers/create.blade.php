@@ -11,7 +11,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
+                <div class="row mb-2"> 
                     <div class="col-sm-6">
                         <h1>Publisher Tables</h1>
                     </div>
@@ -87,6 +87,7 @@
                                       </div>
                                     </div>
                                   </div>    
+                                  @can('dashboard.publishers.toggle')
                                 <div class="form-group col-md-6 ">
                                     <label for="active"> Active the Publisher</label>
                                     <div class="custom-control custom-switch ">
@@ -100,6 +101,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @endcan
                                 <!-- /.card-body -->
                             </div>
                             <div class="card-footer">

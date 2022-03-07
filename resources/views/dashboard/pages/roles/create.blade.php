@@ -57,7 +57,7 @@
                                         <div class="col-md-4">
                                             <label for="">
                                                 <input type="checkbox" name="permissions[]" value="{{ $permisiion->name}}"  data-bootstrap-switch data-off-color="danger" data-on-color="success">
-                                            <span class="ml-1">{{ $permisiion->name}} </span>
+                                            <span class="ml-1"> </span>{{ $permisiion->name}}
                                             </label>
 
                                         </div>

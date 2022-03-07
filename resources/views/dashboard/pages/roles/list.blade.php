@@ -27,8 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.roles.create')
                                 <h3 class="card-title"> <a href="{{ route('dashboard.roles.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
+                                @endcan
 
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
@@ -55,7 +57,9 @@
                                             <th>ID</th>
                                             <th>name</th>
                                             <th>Guard</th>
+                                            @canany(['dashboard.roles.edit', 'dashboard.roles.destroy'])
                                             <th>Action</th>
+                                            @endcanany
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,13 +68,19 @@
                                                 <td>{{ $role->id }}</td>
                                                 <td>{{ $role->name }}</td>
                                                 <td>{{ $role->guard_name }}</td>
-                                                
+                                                @canany(['dashboard.roles.edit', 'dashboard.roles.destroy'])
                                                 <td>
+                                                    @can('dashboard.roles.edit')
                                                     <a href="{{ route('dashboard.roles.edit', $role->id) }}"
                                                         class="btn btn-outline-success">Edit</a>
+                                                    @endcan
+
+                                                    @can('dashboard.roles.destroy')
                                                     <a href="{{ route('dashboard.roles.destroy', $role->id) }}"
                                                         class="btn btn-outline-danger btn-destroy">Delete</a>
+                                                    @endcan
                                                 </td>
+                                                @endcanany
                                             </tr>
                                         @endforeach
 

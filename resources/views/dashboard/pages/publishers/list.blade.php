@@ -27,8 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title"> <a href="{{ route('dashboard.publishers.create') }}"
-                                        class="btn btn-primary">Add new</a></h3>
+                                @can('dashboard.publishers.create')
+                                    <h3 class="card-title"> <a href="{{ route('dashboard.publishers.create') }}"
+                                            class="btn btn-primary">Add new</a></h3>
+                                @endcan
 
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
@@ -56,77 +58,94 @@
                                             <th>Avatar</th>
                                             <th>name</th>
                                             <th>Bio</th>
-                                            <th>Active</th>
-                                            <th>Action</th>
+                                            @can('dashboard.publishers.toggle')
+                                                <th>Active</th>
+                                            @endcan
+                                            @canany(['dashboard.publishers.edit', 'dashboard.publishers.destroy'])
+                                                <th>Action</th>
+                                            @endcanany
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($publishers as $publisher)
                                             <tr>
                                                 <td>{{ $publisher->id }}</td>
-                                                <td> <img src="{{ Storage::url("public/publishers/").$publisher->avatar }}"  class="img-thumbnail" alt="{{ $publisher->name }}" srcset=""></td>
-                                                <td>{{ $publisher->name }}</td>
-                                                <td>{!! Str::limit($publisher->bio,30, $end='...') !!}</td>
-                                                <td>
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.publishers.toggle',$publisher->id) }}"
-                                                            data-id="{{ $publisher->id }}"
-                                                            @if ($publisher->active) checked @endif
-                                                            id="customSwitch{{ $publisher->id }}">
-                                                        <label class="custom-control-label"
-                                                            for="customSwitch{{ $publisher->id }}"></label>
-                                                    </div>
-                                                <td>
-                                                    <a href="{{ route('dashboard.publishers.edit', $publisher->id) }}"
-                                                        class="btn btn-outline-success">Edit</a>
-                                                    <a href="{{ route('dashboard.publishers.destroy', $publisher->id) }}"
-                                                        class="btn btn-outline-danger btn-destroy">Delete</a>
+                                                <td> <img
+                                                        src="{{ Storage::url('public/publishers/') . $publisher->avatar }}"
+                                                        class="img-thumbnail" alt="{{ $publisher->name }}" srcset="">
                                                 </td>
-                                            </tr>
-                                        @endforeach
+                                                <td>{{ $publisher->name }}</td>
+                                                <td>{!! Str::limit($publisher->bio, 30, $end = '...') !!}</td>
+                                                @can('dashboard.publishers.toggle')
+                                                    <td>
+                                                        <div class="custom-control custom-switch">
+                                                            <input type="checkbox" class="custom-control-input toggle-status"
+                                                                data-url="{{ route('dashboard.publishers.toggle', $publisher->id) }}"
+                                                                data-id="{{ $publisher->id }}"
+                                                                @if ($publisher->active) checked @endif
+                                                                id="customSwitch{{ $publisher->id }}">
+                                                            <label class="custom-control-label"
+                                                                for="customSwitch{{ $publisher->id }}"></label>
+                                                        </div>
+                                                    </td>
+                                                @endcan
+                                                @canany(['dashboard.publishers.edit', 'dashboard.publishers.destroy'])
+                                                    <td>
+                                                        @can('dashboard.publishers.edit')
+                                                            <a href="{{ route('dashboard.publishers.edit', $publisher->id) }}"
+                                                                class="btn btn-outline-success">Edit</a>
+                                                        @endcan
+                                                        @can('dashboard.publishers.destroy')
+                                                            <a href="{{ route('dashboard.publishers.destroy', $publisher->id) }}"
+                                                            class="btn btn-outline-danger btn-destroy">Delete</a>
+                                                    @endcan
+                                                </td>
+                                                @endcanany
+                                        </tr>
+                                    @endforeach
 
-                                    </tbody>
-                                </table>
-                                <div class=" d-flex justify-content-center">
+                                </tbody>
+                            </table>
+                            <div class=" d-flex justify-content-center">
 
-                                    {{ $publishers->appends($_GET)->links('pagination::bootstrap-4') }}
-                                </div>
+                                {{ $publishers->appends($_GET)->links('pagination::bootstrap-4') }}
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
+            </div>
 
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="delete-recored" tabindex="-1" role="dialog" aria-labelledby="delete-recoredLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="delete-recoredLabel">Remove recored</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h5>Are you sure of deleteing this recored</h5>
-                    <form action="" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">DElETE</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+<!-- Modal -->
+<div class="modal fade" id="delete-recored" tabindex="-1" role="dialog" aria-labelledby="delete-recoredLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-recoredLabel">Remove recored</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure of deleteing this recored</h5>
+                <form action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">DElETE</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 @endsection

@@ -33,8 +33,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.permissions.create')
                                 <h3 class="card-title"> <a href="{{ route('dashboard.permissions.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
+                                @endcan
 
                                 <div class="card-tools">
 
@@ -48,7 +50,10 @@
                                             <th>ID</th>
                                             <th>Route</th>
                                             <th>Garud</th>
+                                            @canany(['dashboard.permissions.edit', 'dashboard.permissions.destroy'])
                                             <th>Action</th>
+                                            @endcanany
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,13 +62,14 @@
                                                 <td>{{ $permission->id }}</td>
                                                 <td>{{ $permission->name }}</td>
                                                 <td>{{ $permission->guard_name }}</td>
-                                               
-                                                <td>
-                                                    <a href="{{ route('dashboard.permissions.edit', $permission->id) }}"
-                                                        class="btn btn-outline-success">Edit</a>
-                                                    <a href="{{ route('dashboard.permissions.destroy', $permission->id) }}"
-                                                        class="btn btn-outline-danger btn-destroy">Delete</a>
-                                                </td>
+                                               @canany(['dashboard.permissions.edit', 'dashboard.permissions.destroy'])
+                                               <td>
+                                                   <a href="{{ route('dashboard.permissions.edit', $permission->id) }}"
+                                                       class="btn btn-outline-success">Edit</a>
+                                                   <a href="{{ route('dashboard.permissions.destroy', $permission->id) }}"
+                                                       class="btn btn-outline-danger btn-destroy">Delete</a>
+                                               </td>
+                                               @endcanany
                                             </tr>
                                         @endforeach
 

@@ -50,7 +50,7 @@
                     </li>
                     @endcan
 
-                    @can(['dashboard.admins.index','dashboard.users.index','dashboard.permissions.index','dashboard.roles.index'])
+                    @canany(['dashboard.admins.index','dashboard.users.index','dashboard.permissions.index','dashboard.roles.index'])
                     <li class="nav-item  @if (request()->routeIs('dashboard.admin*') or request()->routeIs('dashboard.user*') or request()->routeIs('dashboard.roles*') or request()->routeIs('dashboard.permissions*')) menu-open @endif ">
                         <a href="#" class="nav-link">
                             <i class="fas fa-users"></i>
@@ -102,7 +102,7 @@
                     </li>
                     @endcan
 
-                    @can(['dashboard.authours.index','dashboard.authours.create','dashboard.authours.edit','dashboard.authours.destroy'])
+                    @canany(['dashboard.authours.index','dashboard.authours.create','dashboard.authours.edit','dashboard.authours.destroy'])
                     <li class="nav-item  @if (request()->routeIs('dashboard.authours*')) menu-open @endif ">
                         <a href="#" class="nav-link">
                             <i class="fas fa-pen-nib"></i>
@@ -134,7 +134,7 @@
                     </li>
                     @endcan
 
-                    @can(['dashboard.publishers.index','dashboard.publishers.create','dashboard.publishers.edit','dashboard.publishers.destroy'])
+                    @canany(['dashboard.publishers.index','dashboard.publishers.create','dashboard.publishers.edit','dashboard.publishers.destroy'])
                     <li class="nav-item  @if (request()->routeIs('dashboard.publishers*')) menu-open @endif ">
                         <a href="#" class="nav-link">
                             <i class="fas fa-swatchbook"></i>
@@ -170,7 +170,7 @@
                     </li>
                     @endcan
 
-                    @can(['dashboard.languages.index','dashboard.languages.create','dashboard.languages.edit','dashboard.languages.destroy'])
+                    @canany(['dashboard.languages.index','dashboard.languages.create','dashboard.languages.edit','dashboard.languages.destroy'])
                     <li class="nav-item  @if (request()->routeIs('dashboard.languages*')) menu-open @endif ">
                         <a href="#" class="nav-link">
                             <i class="fas fa-globe-africa"></i>

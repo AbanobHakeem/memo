@@ -27,8 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @can('dashboard.authours.create')
                                 <h3 class="card-title"> <a href="{{ route('dashboard.authours.create') }}"
                                         class="btn btn-primary">Add new</a></h3>
+                                @endcan
 
                                 <div class="card-tools">
                                     <form class="d-flex" method="GET"
@@ -56,8 +58,13 @@
                                             <th>Avatar</th>
                                             <th>name</th>
                                             <th>Bio</th>
+                                            @can('dashboard.authours.toggle')
                                             <th>Active</th>
+                                            @endcan
+
+                                            @canany(['dashboard.authours.edit', 'dashboard.authours.destroy'])
                                             <th>Action</th>
+                                            @endcanany
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,6 +74,7 @@
                                                 <td> <img src="{{ Storage::url("public/authours/").$authour->avatar }}"  class="img-thumbnail" alt="{{ $authour->name }}" srcset=""></td>
                                                 <td>{{ $authour->name }}</td>
                                                 <td>{!! Str::limit($authour->bio,30, $end='...') !!}</td>
+                                                @can('dashboard.authours.toggle')
                                                 <td>
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input toggle-status" data-url="{{ route('dashboard.authours.toggle',$authour->id) }}"
@@ -76,12 +84,21 @@
                                                         <label class="custom-control-label"
                                                             for="customSwitch{{ $authour->id }}"></label>
                                                     </div>
+                                                </td>
+                                                @endcan
+
+                                                @canany(['dashboard.authours.edit', 'dashboard.authours.destroy'])
                                                 <td>
+                                                    @can('dashboard.authours.edit')
                                                     <a href="{{ route('dashboard.authours.edit', $authour->id) }}"
                                                         class="btn btn-outline-success">Edit</a>
+                                                    @endcan
+                                                    @can('dashboard.authours.destroy')
                                                     <a href="{{ route('dashboard.authours.destroy', $authour->id) }}"
                                                         class="btn btn-outline-danger btn-destroy">Delete</a>
+                                                    @endcan
                                                 </td>
+                                                @endcanany
                                             </tr>
                                         @endforeach
 
